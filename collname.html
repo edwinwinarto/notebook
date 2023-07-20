@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert Name</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles for the input and button */
+        #name-input {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #btn-pg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20vh auto;
+            padding: 20px 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #btn-pg:hover {
+            background-color: #45a049;
+        }
+
+        /* Custom Alert Modal */
+        .custom-modal-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-modal-input {
+            display: block;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .custom-modal-btns {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .custom-modal-btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .custom-modal-btn.cancel {
+            background-color: #ccc;
+        }
+
+        .custom-modal-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            #btn-pg {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
+
+            .custom-modal-content {
+                padding: 30px;
+            }
+
+            .custom-modal-input {
+                font-size: 18px;
+            }
+
+            .custom-modal-btn {
+                padding: 12px 24px;
+                font-size: 18px;
+            }
+
+            /* For larger alerts */
+            .custom-alert-content {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button onclick="myFunction()" id="btn-pg">Add Username</button>
+        <p id="pg-name"></p>
+    </div>
+
+    <div class="custom-modal-container" id="customPromptModal">
+        <div class="custom-modal-content">
+            <span class="custom-modal-close" onclick="hideCustomPrompt()">&times;</span>
+            <h2>Nama</h2> <!-- Add a custom heading for the prompt -->
+            <p>Input nama : </p> <!-- Add a custom text for the prompt -->
+            <input type="text" class="custom-modal-input" id="customPromptInput" placeholder="Enter your name">
+            <div class="custom-modal-btns">
+                <button class="custom-modal-btn" onclick="handleCustomPromptInput()">Save</button>
+                <button class="custom-modal-btn cancel" onclick="hideCustomPrompt()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-modal-container" id="contactFormModal">
+        <div class="custom-modal-content">
+            <span class="custom-modal-close" onclick="hideContactForm()">&times;</span>
+            <h2>Enter Your Name and Email</h2>
+            <input type="text" class="custom-modal-input" id="contactNameInput" placeholder="Enter your name">
+            <input type="email" class="custom-modal-input" id="contactEmailInput" placeholder="Enter your email">
+            <div class="custom-modal-btns">
+                <button class="custom-modal-btn" onclick="handleContactFormSubmission()">Save</button>
+                <button class="custom-modal-btn cancel" onclick="hideContactForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                const storedName = localStorage.getItem('name');
+        const nameElement = document.getElementById("pg-name");
+
+        if (storedName) {
+            nameElement.textContent = storedName;
+            document.getElementById("btn-pg").style.display = "none";
+        }
+
+        function myFunction() {
+            showCustomPrompt("Enter your name:", "Edwin");
+        }
+
+        function showCustomPrompt(promptMessage, defaultText) {
+            const customPromptModal = document.getElementById("customPromptModal");
+            const customPromptInput = document.getElementById("customPromptInput");
+            customPromptInput.value = defaultText || "";
+            customPromptModal.style.display = "block";
+        }
+
+        function hideCustomPrompt() {
+            const customPromptModal = document.getElementById("customPromptModal");
+            customPromptModal.style.display = "none";
+        }
+
+        function handleCustomPromptInput() {
+            const customPromptInput = document.getElementById("customPromptInput");
+            let name = customPromptInput.value.trim();
+            if (name === "") {
+                alert("Please enter a valid name.");
+                return;
+            }
+
+            // Save the name to local storage
+            localStorage.setItem('name', name);
+
+            nameElement.textContent = name;
+            document.getElementById("btn-pg").style.display = "none";
+            hideCustomPrompt();
+            window.location.href="index.html";
+        }
+
+    </script>
+</body>
+</html>
